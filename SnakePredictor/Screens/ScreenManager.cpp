@@ -10,6 +10,9 @@ ScreenManager::ScreenManager(int _SCREEN_WIDTH, int _SCREEN_HEIGHT)
 	_sys_screenHeight = _SCREEN_HEIGHT;
 	_sys_window = NULL;
 	_sys_screenSurface = NULL;
+	_sys_deltaTime = 0.0f;
+	_sys_lastFrameTime = 0;
+	_sys_currentFrameTime = 0;
 }
 
 
@@ -34,7 +37,8 @@ SDL_Window* ScreenManager::Initialize(const char *_SCREEN_TITLE)
 			printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
 		}
 
-		SDL_ShowCursor(0);
+		SDL_ShowCursor(SDL_DISABLE);
+		_sys_currentFrameTime = SDL_GetTicks();
 	}
 
 	// Set game to running.
@@ -58,6 +62,11 @@ bool ScreenManager::Loop()
 	}
 	else
 	{
+		// Update Delta Time
+		_sys_lastFrameTime = _sys_currentFrameTime;
+		_sys_currentFrameTime = SDL_GetTicks();
+		_sys_deltaTime = (float)(_sys_currentFrameTime - _sys_lastFrameTime) / 1000;
+
 		// Do update
 		while (SDL_PollEvent(&_sys_eventHandler) != 0)
 		{

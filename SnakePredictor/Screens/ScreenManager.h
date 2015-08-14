@@ -19,6 +19,10 @@ private:
 	SDL_Window* _sys_window;
 	SDL_Surface* _sys_screenSurface;
 	SDL_Event _sys_eventHandler;
+
+	float _sys_deltaTime;
+	int _sys_lastFrameTime;
+	int _sys_currentFrameTime;
 };
 
 #endif
