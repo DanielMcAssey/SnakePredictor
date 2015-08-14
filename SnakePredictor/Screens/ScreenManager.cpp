@@ -26,7 +26,7 @@ SDL_Window* ScreenManager::Initialize(const char *_SCREEN_TITLE)
 	printf("SDL INIT: Initialize\n");
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
-		printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
+		printf("SDL ERR: SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
 	}
 	else
 	{
@@ -34,7 +34,7 @@ SDL_Window* ScreenManager::Initialize(const char *_SCREEN_TITLE)
 		_sys_window = SDL_CreateWindow(_SCREEN_TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, _sys_screenWidth, _sys_screenHeight, SDL_WINDOW_SHOWN);
 		if (_sys_window == NULL)
 		{
-			printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
+			printf("SDL ERR: Window could not be created! SDL_Error: %s\n", SDL_GetError());
 		}
 
 		SDL_ShowCursor(SDL_DISABLE);
@@ -43,7 +43,6 @@ SDL_Window* ScreenManager::Initialize(const char *_SCREEN_TITLE)
 
 	// Set game to running.
 	_sys_gameRunning = true;
-
 	return _sys_window;
 }
 
@@ -58,7 +57,7 @@ bool ScreenManager::Loop()
 {
 	if (_sys_window == NULL)
 	{
-		_sys_gameRunning = false;
+		return false; // Window doesnt exist so exit the game forcefully.
 	}
 	else
 	{
@@ -86,12 +85,12 @@ void ScreenManager::Render()
 {
 	if (_sys_window == NULL)
 	{
-		_sys_gameRunning = false;
+		return; // Window does not exist, so no point in rendering.
 	}
 	else
 	{
-
 		// Do render
+
 		_sys_screenSurface = SDL_GetWindowSurface(_sys_window);
 
 		//Fill the surface white
