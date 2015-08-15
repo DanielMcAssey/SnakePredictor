@@ -12,6 +12,8 @@ public:
 
 	bool Loop();
 	void Render();
+protected:
+	InputManager* gInput; // Global input manager accesable by all screens
 private:
 	int _sys_screenWidth;
 	int _sys_screenHeight;

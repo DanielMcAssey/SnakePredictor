@@ -153,6 +153,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Input\InputHelper.cpp" />
+    <ClCompile Include="Input\InputManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Screens\ScreenManager.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -163,6 +165,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Input\InputHelper.h" />
+    <ClInclude Include="Input\InputManager.h" />
     <ClInclude Include="Screens\ScreenManager.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>

@@ -23,6 +23,9 @@ ScreenManager::~ScreenManager()
 
 SDL_Window* ScreenManager::Initialize(const char *_SCREEN_TITLE)
 {
+	if (_sys_gameRunning) // Prevent re-initializing
+		return NULL;
+
 	printf("SDL INIT: Initialize\n");
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
@@ -41,6 +44,9 @@ SDL_Window* ScreenManager::Initialize(const char *_SCREEN_TITLE)
 		_sys_currentFrameTime = SDL_GetTicks();
 	}
 
+	// Initialize InputManager
+	gInput = new InputManager();
+
 	// Set game to running.
 	_sys_gameRunning = true;
 	return _sys_window;
@@ -49,6 +55,9 @@ SDL_Window* ScreenManager::Initialize(const char *_SCREEN_TITLE)
 // Unload everything that ScreenManager manages
 void ScreenManager::UnloadAll()
 {
+	if (!_sys_gameRunning)
+		return;
+
 	// Unload everything and prepare for exit
 }
 
@@ -65,8 +74,9 @@ bool ScreenManager::Loop()
 		_sys_lastFrameTime = _sys_currentFrameTime;
 		_sys_currentFrameTime = SDL_GetTicks();
 		_sys_deltaTime = (float)(_sys_currentFrameTime - _sys_lastFrameTime) / 1000;
+		
+		SDL_PumpEvents(); // Update Input states and event queue
 
-		// Do update
 		while (SDL_PollEvent(&_sys_eventHandler) != 0)
 		{
 			if (_sys_eventHandler.type == SDL_QUIT)
@@ -74,6 +84,8 @@ bool ScreenManager::Loop()
 				_sys_gameRunning = false;
 			}
 		}
+
+		gInput->UpdateStates();
 	}
 
 	// Is game still running?
