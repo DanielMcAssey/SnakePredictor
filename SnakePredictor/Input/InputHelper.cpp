@@ -3,7 +3,7 @@
 #include "InputHelper.h"
 
 
-InputHelper::InputHelper(const Uint8 *keyboardState, Uint8 *keyboardLastState)
+InputHelper::InputHelper(Uint8 *keyboardState, Uint8 *keyboardLastState)
 {
 	_sys_keyboardState = keyboardState;
 	_sys_keyboardLastState = keyboardLastState;
@@ -22,19 +22,14 @@ bool InputHelper::IsPressed()
 {
 	typedef std::map<SDL_Keycode, bool>::iterator it_type;
 	for (it_type iterator = _sys_keyboardKeys.begin(); iterator != _sys_keyboardKeys.end(); iterator++) {
-		if (_sys_keyboardKeys[iterator->first]) // Wait till is released
+		if (_sys_keyboardKeys[iterator->first]) // Is it wait for key to be released?
 		{
-			if (_sys_keyboardState[iterator->first] && !_sys_keyboardLastState[iterator->first])
-			{
-				return true;
-			}
+			// TODO: Broken, seems like last keyboard state isnt updating
+			return (_sys_keyboardState[iterator->first] && !_sys_keyboardLastState[iterator->first]);
 		}
 		else
 		{
-			if (_sys_keyboardState[iterator->first])
-			{
-				return true;
-			}
+			return _sys_keyboardState[iterator->first];
 		}
 	}
 	return false;

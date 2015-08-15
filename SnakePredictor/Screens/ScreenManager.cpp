@@ -46,6 +46,7 @@ SDL_Window* ScreenManager::Initialize(const char *_SCREEN_TITLE)
 
 	// Initialize InputManager
 	gInput = new InputManager();
+	gInput->AddKeyboardInput("QUIT", SDL_SCANCODE_Q, true);
 
 	// Set game to running.
 	_sys_gameRunning = true;
@@ -74,18 +75,12 @@ bool ScreenManager::Loop()
 		_sys_lastFrameTime = _sys_currentFrameTime;
 		_sys_currentFrameTime = SDL_GetTicks();
 		_sys_deltaTime = (float)(_sys_currentFrameTime - _sys_lastFrameTime) / 1000;
-		
-		SDL_PumpEvents(); // Update Input states and event queue
 
-		while (SDL_PollEvent(&_sys_eventHandler) != 0)
-		{
-			if (_sys_eventHandler.type == SDL_QUIT)
-			{
-				_sys_gameRunning = false;
-			}
-		}
+		gInput->UpdateStates(); // Update input states
 
-		gInput->UpdateStates();
+		if (gInput->IsPressed("QUIT"))
+			_sys_gameRunning = false;
+
 	}
 
 	// Is game still running?

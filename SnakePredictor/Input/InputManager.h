@@ -18,8 +18,10 @@ private:
 	InputHelper* NewInput(std::string _action);
 
 	std::map<std::string, InputHelper*> _sys_inputs;
-	const Uint8 *_sys_keyboardState;
+	int _sys_keyboardStateLength;
+	Uint8 *_sys_keyboardState;
 	Uint8 *_sys_keyboardLastState;
+	const Uint8 *_sys_keyboardSDLState;
 };
 
 #endif

@@ -5,14 +5,18 @@
 
 InputManager::InputManager()
 {
-	_sys_keyboardState = SDL_GetKeyboardState(NULL);
+	_sys_keyboardSDLState = SDL_GetKeyboardState(&_sys_keyboardStateLength);
+	_sys_keyboardState = new Uint8[_sys_keyboardStateLength];
+	_sys_keyboardLastState = new Uint8[_sys_keyboardStateLength];
 }
 
 
 InputManager::~InputManager()
 {
-	_sys_keyboardState = NULL;
-	delete _sys_keyboardLastState;
+	_sys_keyboardSDLState = NULL;
+	delete[] _sys_keyboardState;
+	_sys_keyboardState = nullptr;
+	delete[] _sys_keyboardLastState;
 	_sys_keyboardLastState = nullptr;
 }
 
@@ -53,5 +57,7 @@ void InputManager::ResetAllInput()
 
 void InputManager::UpdateStates()
 {
-	//std::memcpy(_sys_keyboardLastState, _sys_keyboardState, sizeof(_sys_keyboardState)); // TODO: BROKEN, need to get correct size of array
+	std::memcpy(_sys_keyboardLastState, _sys_keyboardState, _sys_keyboardStateLength);
+	SDL_PumpEvents(); // Update Input states and event queue
+	std::memcpy(_sys_keyboardState, _sys_keyboardSDLState, _sys_keyboardStateLength);
 }
