@@ -13,6 +13,8 @@ InputHelper::InputHelper(const Uint8 *keyboardState, Uint8 *keyboardLastState)
 InputHelper::~InputHelper()
 {
 	_sys_keyboardState = NULL;
+	delete _sys_keyboardLastState;
+	_sys_keyboardLastState = nullptr;
 }
 
 

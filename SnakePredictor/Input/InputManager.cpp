@@ -12,6 +12,8 @@ InputManager::InputManager()
 InputManager::~InputManager()
 {
 	_sys_keyboardState = NULL;
+	delete _sys_keyboardLastState;
+	_sys_keyboardLastState = nullptr;
 }
 
 
@@ -51,5 +53,5 @@ void InputManager::ResetAllInput()
 
 void InputManager::UpdateStates()
 {
-	std::memcpy(_sys_keyboardLastState, _sys_keyboardState, sizeof(_sys_keyboardState));
+	//std::memcpy(_sys_keyboardLastState, _sys_keyboardState, sizeof(_sys_keyboardState)); // TODO: BROKEN, need to get correct size of array
 }
