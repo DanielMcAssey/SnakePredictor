@@ -11,7 +11,7 @@ int main(int argc, char* args[])
 	_sys_screenManager = new ScreenManager(SCREEN_WIDTH, SCREEN_HEIGHT);
 	SDL_Window* _sys_window = _sys_screenManager->Initialize(SCREEN_TITLE);
 
-	printf("SDL INIT: Running Main Loop\n");
+	printf("SDL START: Running Main Loop\n");
 	while (_sys_screenManager->Loop()) // Update game and check its still running
 	{
 		_sys_screenManager->Render(); // Render game

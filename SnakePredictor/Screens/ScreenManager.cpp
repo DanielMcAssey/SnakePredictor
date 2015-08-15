@@ -26,7 +26,7 @@ SDL_Window* ScreenManager::Initialize(const char *_SCREEN_TITLE)
 	if (_sys_gameRunning) // Prevent re-initializing
 		return NULL;
 
-	printf("SDL INIT: Initialize\n");
+	printf("SDL INIT: Initializing\n");
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
 		printf("SDL ERR: SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
@@ -44,9 +44,12 @@ SDL_Window* ScreenManager::Initialize(const char *_SCREEN_TITLE)
 		_sys_currentFrameTime = SDL_GetTicks();
 	}
 
+	printf("SDL INIT: Registering Inputs\n");
 	// Initialize InputManager
 	gInput = new InputManager();
 	gInput->AddKeyboardInput("QUIT", SDL_SCANCODE_Q, true);
+	gInput->AddKeyboardInput("ENTER", SDL_SCANCODE_RETURN, true);
+	gInput->AddKeyboardInput("ENTER", SDL_SCANCODE_RETURN2, true);
 
 	// Set game to running.
 	_sys_gameRunning = true;
