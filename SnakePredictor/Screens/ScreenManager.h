@@ -30,6 +30,7 @@ private:
 	int _sys_currentFrameTime;
 
 	std::vector<std::unique_ptr<BaseScreen>> _sys_screenList;
+	std::vector<std::unique_ptr<BaseScreen>>::iterator _sys_screenList_itr;
 };
 
 #endif

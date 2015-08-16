@@ -58,8 +58,8 @@ SDL_Window* ScreenManager::Initialize(const char *_SCREEN_TITLE)
 
 	printf("SDL INIT: Loading Default Screens Content\n");
 	// Load the screen content
-	for (std::vector<std::unique_ptr<BaseScreen>>::iterator itr = _sys_screenList.begin(); itr != _sys_screenList.end(); ++itr) {
-		(*itr)->Load();
+	for (_sys_screenList_itr = _sys_screenList.begin(); _sys_screenList_itr != _sys_screenList.end(); ++_sys_screenList_itr) {
+		(*_sys_screenList_itr)->Load();
 	}
 
 	// Set game to running.
@@ -74,14 +74,16 @@ void ScreenManager::UnloadAll()
 		return; // Dont exit if game is running
 
 	printf("SDL EXIT: Preparing for Exit\n");
-	delete gInput;
-	gInput = nullptr;
-
 	printf("SDL EXIT: Unloading Screens\n");
 	// Unload all screens
-	for (std::vector<std::unique_ptr<BaseScreen>>::iterator itr = _sys_screenList.begin(); itr != _sys_screenList.end(); ++itr) {
-		(*itr)->Unload();
+	for (_sys_screenList_itr = _sys_screenList.begin(); _sys_screenList_itr != _sys_screenList.end(); ++_sys_screenList_itr) {
+		(*_sys_screenList_itr)->Unload();
 	}
+
+	printf("SDL EXIT: Misc. Tasks\n");
+	_sys_screenList.clear();
+	delete gInput;
+	gInput = nullptr;
 }
 
 // Update the screens
@@ -103,8 +105,8 @@ bool ScreenManager::Loop()
 		if (gInput->IsPressed("QUIT")) // Global quit input
 			_sys_gameRunning = false;
 
-		for (std::vector<std::unique_ptr<BaseScreen>>::iterator itr = _sys_screenList.begin(); itr != _sys_screenList.end(); ++itr) {
-			(*itr)->Update(_sys_deltaTime);
+		for (_sys_screenList_itr = _sys_screenList.begin(); _sys_screenList_itr != _sys_screenList.end(); ++_sys_screenList_itr) {
+			(*_sys_screenList_itr)->Update(_sys_deltaTime);
 		}
 	}
 
@@ -127,8 +129,8 @@ void ScreenManager::Render()
 		// Fill the surface white
 		SDL_FillRect(_sys_screenSurface, NULL, SDL_MapRGB(_sys_screenSurface->format, 0xFF, 0xFF, 0xFF));
 
-		for (std::vector<std::unique_ptr<BaseScreen>>::iterator itr = _sys_screenList.begin(); itr != _sys_screenList.end(); ++itr) {
-			(*itr)->Render();
+		for (_sys_screenList_itr = _sys_screenList.begin(); _sys_screenList_itr != _sys_screenList.end(); ++_sys_screenList_itr) {
+			(*_sys_screenList_itr)->Render();
 		}
 
 		SDL_UpdateWindowSurface(_sys_window);
