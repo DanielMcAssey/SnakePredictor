@@ -14,20 +14,21 @@ public:
 
 	bool Loop();
 	void Render();
-protected:
-	InputManager* gInput; // Global input manager accesable by all screens
 private:
 	int _sys_screenWidth;
 	int _sys_screenHeight;
 	bool _sys_gameRunning;
 
 	SDL_Window* _sys_window;
-	SDL_Surface* _sys_screenSurface;
 	SDL_Event _sys_eventHandler;
+	SDL_Renderer* _sys_renderer;
+	InputManager* _sys_input;
 
 	float _sys_deltaTime;
 	int _sys_lastFrameTime;
 	int _sys_currentFrameTime;
+	float _sys_fpsCounterUpdateTime;
+	int _sys_fpsAccumulated;
 
 	std::vector<std::unique_ptr<BaseScreen>> _sys_screenList;
 	std::vector<std::unique_ptr<BaseScreen>>::iterator _sys_screenList_itr;

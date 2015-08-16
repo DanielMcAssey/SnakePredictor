@@ -4,14 +4,15 @@
 class BaseScreen
 {
 public:
-	BaseScreen(String _name, InputManager* _input);
+	BaseScreen(String _name, InputManager* _input, SDL_Window* _window);
 	~BaseScreen();
 	virtual void Load();
 	virtual void Unload();
 	virtual void Update(float _DeltaTime);
-	virtual void Render();
+	virtual void Render(SDL_Renderer* _Renderer);
 protected:
 	InputManager* gInput;
+	SDL_Window* gWindow;
 	std::string gScreenName;
 };
 

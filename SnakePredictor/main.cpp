@@ -18,7 +18,7 @@ int main(int argc, char* args[])
 		SDL_Delay(1000 / SCREEN_FPS); // Lock to FPS
 	}
 
-	printf("SDL EXIT: Unloading Everything\n");
+	printf("SDL STOP: Unloading Everything\n");
 	// Game exited, so unload everything
 	_sys_screenManager->UnloadAll();
 	
