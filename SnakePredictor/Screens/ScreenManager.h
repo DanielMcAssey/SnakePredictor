@@ -9,7 +9,7 @@ public:
 	ScreenManager(int _SCREEN_WIDTH, int _SCREEN_HEIGHT);
 	~ScreenManager();
 
-	SDL_Window* Initialize(const char *_SCREEN_TITLE);
+	SDL_Window* Initialize(String _SCREEN_TITLE);
 	void UnloadAll();
 
 	bool Loop();

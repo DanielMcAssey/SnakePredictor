@@ -6,7 +6,7 @@
 class GameScreen : public BaseScreen
 {
 public:
-	GameScreen(std::string _name, InputManager* _input);
+	GameScreen(String _name, InputManager* _input);
 	~GameScreen();
 
 	void Load();

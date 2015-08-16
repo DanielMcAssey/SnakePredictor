@@ -21,7 +21,7 @@ ScreenManager::~ScreenManager()
 }
 
 
-SDL_Window* ScreenManager::Initialize(const char *_SCREEN_TITLE)
+SDL_Window* ScreenManager::Initialize(String _SCREEN_TITLE)
 {
 	if (_sys_gameRunning) // Prevent re-initializing
 		return NULL;
@@ -34,7 +34,7 @@ SDL_Window* ScreenManager::Initialize(const char *_SCREEN_TITLE)
 	else
 	{
 		printf("SDL INIT: Creating Window\n");
-		_sys_window = SDL_CreateWindow(_SCREEN_TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, _sys_screenWidth, _sys_screenHeight, SDL_WINDOW_SHOWN);
+		_sys_window = SDL_CreateWindow(_SCREEN_TITLE.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, _sys_screenWidth, _sys_screenHeight, SDL_WINDOW_SHOWN);
 		if (_sys_window == NULL)
 		{
 			printf("SDL ERR: Window could not be created! SDL_Error: %s\n", SDL_GetError());

@@ -3,7 +3,7 @@
 #include "BaseScreen.h"
 
 
-BaseScreen::BaseScreen(std::string _name, InputManager* _input)
+BaseScreen::BaseScreen(String _name, InputManager* _input)
 {
 	gInput = _input;
 	gScreenName = _name;

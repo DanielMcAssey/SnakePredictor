@@ -21,7 +21,7 @@ InputManager::~InputManager()
 }
 
 
-bool InputManager::IsPressed(std::string _action)
+bool InputManager::IsPressed(String _action)
 {
 	if (!_sys_inputs.count(_action))
 	{
@@ -32,7 +32,7 @@ bool InputManager::IsPressed(std::string _action)
 }
 
 
-InputHelper* InputManager::NewInput(std::string _action)
+InputHelper* InputManager::NewInput(String _action)
 {
 	if (!_sys_inputs.count(_action))
 	{
@@ -43,7 +43,7 @@ InputHelper* InputManager::NewInput(std::string _action)
 }
 
 
-void InputManager::AddKeyboardInput(std::string _action, SDL_Keycode _key, bool _isReleased)
+void InputManager::AddKeyboardInput(String _action, SDL_Keycode _key, bool _isReleased)
 {
 	this->NewInput(_action)->AddKeyboardInput(_key, _isReleased);
 }

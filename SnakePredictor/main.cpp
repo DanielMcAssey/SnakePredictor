@@ -4,7 +4,7 @@ int main(int argc, char* args[])
 {
 	const int SCREEN_WIDTH = 640;
 	const int SCREEN_HEIGHT = 480;
-	const char* SCREEN_TITLE = "Snake Predictor";
+	const String SCREEN_TITLE = "Snake Predictor";
 	const int SCREEN_FPS = 60;
 
 	ScreenManager* _sys_screenManager = NULL;

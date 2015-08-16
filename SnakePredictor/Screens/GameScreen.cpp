@@ -5,7 +5,7 @@
 const int SNAKE_GRID_HEIGHT = 1024;
 const int SNAKE_GRID_WIDTH = 1024;
 
-GameScreen::GameScreen(std::string _name, InputManager* _input) : BaseScreen(_name, _input)
+GameScreen::GameScreen(String _name, InputManager* _input) : BaseScreen(_name, _input)
 {
 }
 

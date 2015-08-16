@@ -4,7 +4,7 @@
 class BaseScreen
 {
 public:
-	BaseScreen(std::string _name, InputManager* _input);
+	BaseScreen(String _name, InputManager* _input);
 	~BaseScreen();
 	virtual void Load();
 	virtual void Unload();

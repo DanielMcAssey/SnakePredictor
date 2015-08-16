@@ -9,15 +9,15 @@ public:
 	InputManager();
 	~InputManager();
 
-	bool IsPressed(std::string _action);
+	bool IsPressed(String _action);
 
-	void AddKeyboardInput(std::string _action, SDL_Keycode _key, bool _isReleased);
+	void AddKeyboardInput(String _action, SDL_Keycode _key, bool _isReleased);
 	void ResetAllInput();
 	void UpdateStates();
 private:
-	InputHelper* NewInput(std::string _action);
+	InputHelper* NewInput(String _action);
 
-	std::map<std::string, InputHelper*> _sys_inputs;
+	std::map<String, InputHelper*> _sys_inputs;
 	int _sys_keyboardStateLength;
 	Uint8 *_sys_keyboardState;
 	Uint8 *_sys_keyboardLastState;
