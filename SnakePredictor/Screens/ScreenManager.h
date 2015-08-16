@@ -1,6 +1,8 @@
 #ifndef __SCREEN_MANAGER
 #define __SCREEN_MANAGER
 
+#include "ScreenList.h"
+
 class ScreenManager
 {
 public:
@@ -26,6 +28,8 @@ private:
 	float _sys_deltaTime;
 	int _sys_lastFrameTime;
 	int _sys_currentFrameTime;
+
+	std::vector<std::unique_ptr<BaseScreen>> _sys_screenList;
 };
 
 #endif

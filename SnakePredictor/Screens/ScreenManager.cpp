@@ -48,8 +48,19 @@ SDL_Window* ScreenManager::Initialize(const char *_SCREEN_TITLE)
 	// Initialize InputManager
 	gInput = new InputManager();
 	gInput->AddKeyboardInput("QUIT", SDL_SCANCODE_Q, true);
+	gInput->AddKeyboardInput("QUIT", SDL_SCANCODE_ESCAPE, true);
 	gInput->AddKeyboardInput("ENTER", SDL_SCANCODE_RETURN, true);
 	gInput->AddKeyboardInput("ENTER", SDL_SCANCODE_RETURN2, true);
+
+	printf("SDL INIT: Registering Default Screens\n");
+	// Add initial screens
+	_sys_screenList.push_back(std::unique_ptr<BaseScreen>(new GameScreen("Game", gInput)));
+
+	printf("SDL INIT: Loading Default Screens Content\n");
+	// Load the screen content
+	for (std::vector<std::unique_ptr<BaseScreen>>::iterator itr = _sys_screenList.begin(); itr != _sys_screenList.end(); ++itr) {
+		(*itr)->Load();
+	}
 
 	// Set game to running.
 	_sys_gameRunning = true;
@@ -59,10 +70,18 @@ SDL_Window* ScreenManager::Initialize(const char *_SCREEN_TITLE)
 // Unload everything that ScreenManager manages
 void ScreenManager::UnloadAll()
 {
-	if (!_sys_gameRunning)
-		return;
+	if (_sys_gameRunning)
+		return; // Dont exit if game is running
 
-	// Unload everything and prepare for exit
+	printf("SDL EXIT: Preparing for Exit\n");
+	delete gInput;
+	gInput = nullptr;
+
+	printf("SDL EXIT: Unloading Screens\n");
+	// Unload all screens
+	for (std::vector<std::unique_ptr<BaseScreen>>::iterator itr = _sys_screenList.begin(); itr != _sys_screenList.end(); ++itr) {
+		(*itr)->Unload();
+	}
 }
 
 // Update the screens
@@ -81,9 +100,12 @@ bool ScreenManager::Loop()
 
 		gInput->UpdateStates(); // Update input states
 
-		if (gInput->IsPressed("QUIT"))
+		if (gInput->IsPressed("QUIT")) // Global quit input
 			_sys_gameRunning = false;
 
+		for (std::vector<std::unique_ptr<BaseScreen>>::iterator itr = _sys_screenList.begin(); itr != _sys_screenList.end(); ++itr) {
+			(*itr)->Update(_sys_deltaTime);
+		}
 	}
 
 	// Is game still running?
@@ -99,12 +121,15 @@ void ScreenManager::Render()
 	}
 	else
 	{
+		_sys_screenSurface = SDL_GetWindowSurface(_sys_window);
 		// Do render
 
-		_sys_screenSurface = SDL_GetWindowSurface(_sys_window);
-
-		//Fill the surface white
+		// Fill the surface white
 		SDL_FillRect(_sys_screenSurface, NULL, SDL_MapRGB(_sys_screenSurface->format, 0xFF, 0xFF, 0xFF));
+
+		for (std::vector<std::unique_ptr<BaseScreen>>::iterator itr = _sys_screenList.begin(); itr != _sys_screenList.end(); ++itr) {
+			(*itr)->Render();
+		}
 
 		SDL_UpdateWindowSurface(_sys_window);
 	}

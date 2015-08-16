@@ -156,6 +156,8 @@
     <ClCompile Include="Input\InputHelper.cpp" />
     <ClCompile Include="Input\InputManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Screens\BaseScreen.cpp" />
+    <ClCompile Include="Screens\GameScreen.cpp" />
     <ClCompile Include="Screens\ScreenManager.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -167,6 +169,9 @@
   <ItemGroup>
     <ClInclude Include="Input\InputHelper.h" />
     <ClInclude Include="Input\InputManager.h" />
+    <ClInclude Include="Screens\BaseScreen.h" />
+    <ClInclude Include="Screens\GameScreen.h" />
+    <ClInclude Include="Screens\ScreenList.h" />
     <ClInclude Include="Screens\ScreenManager.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>

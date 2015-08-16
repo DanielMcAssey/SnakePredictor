@@ -24,7 +24,6 @@ bool InputHelper::IsPressed()
 	for (it_type iterator = _sys_keyboardKeys.begin(); iterator != _sys_keyboardKeys.end(); iterator++) {
 		if (_sys_keyboardKeys[iterator->first]) // Is it wait for key to be released?
 		{
-			// TODO: Broken, seems like last keyboard state isnt updating
 			return (_sys_keyboardState[iterator->first] && !_sys_keyboardLastState[iterator->first]);
 		}
 		else
