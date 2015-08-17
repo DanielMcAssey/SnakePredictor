@@ -12,9 +12,9 @@ int main(int argc, char* args[])
 	SDL_Window* _sys_window = _sys_screenManager->Initialize(SCREEN_TITLE, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	printf("SDL START: Running Main Loop\n");
-	while (_sys_screenManager->Loop()) // Update game and check its still running
+	while (_sys_screenManager->Loop()) // Update screens and check its still running
 	{
-		_sys_screenManager->Render(); // Render game
+		_sys_screenManager->Render(); // Render screens
 		SDL_Delay(1000 / SCREEN_FPS); // Lock to FPS
 	}
 
