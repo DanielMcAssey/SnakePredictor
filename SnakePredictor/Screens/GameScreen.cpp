@@ -3,6 +3,7 @@
 #include "GameScreen.h"
 
 const int POINT_SIZE = 10; // 10 Pixels high and wide for every segment
+const int BORDER_WIDTH = 3; // 2 Points of border
 const int SNAKE_START_SIZE = 3;  // 3 Points start size
 const float SNAKE_UPDATE_FREQUENCY = 1.0f; // Once every second
 
@@ -18,6 +19,7 @@ GameScreen::~GameScreen()
 
 void GameScreen::PlaceFood()
 {
+	// TODO: Find a better/faster way of randomly placing food
 	bool isPlaced = false;
 
 	while (!isPlaced)
@@ -50,7 +52,7 @@ void GameScreen::Load()
 	{
 		for (int y = 0; y < LevelHeight; y++)
 		{
-			if (x == 0 || y == 0 || x == (LevelWidth - 1) || y == (LevelHeight - 1)) // Create boundries
+			if (x < BORDER_WIDTH || y < BORDER_WIDTH || x >= (LevelWidth - BORDER_WIDTH) || y >= (LevelHeight - BORDER_WIDTH)) // Create boundries
 			{
 				LevelGrid[std::make_pair(x, y)] = LEVEL_SEGMENT_WALL;
 			}
