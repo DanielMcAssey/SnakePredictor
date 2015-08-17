@@ -6,10 +6,10 @@
 class ScreenManager
 {
 public:
-	ScreenManager(int _SCREEN_WIDTH, int _SCREEN_HEIGHT);
+	ScreenManager();
 	~ScreenManager();
 
-	SDL_Window* Initialize(String _SCREEN_TITLE);
+	SDL_Window* Initialize(String _SCREEN_TITLE, int _SCREEN_WIDTH, int _SCREEN_HEIGHT);
 	void UnloadAll();
 
 	bool Loop();

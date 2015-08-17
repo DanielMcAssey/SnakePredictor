@@ -3,11 +3,11 @@
 #include "ScreenManager.h"
 
 
-ScreenManager::ScreenManager(int _SCREEN_WIDTH, int _SCREEN_HEIGHT)
+ScreenManager::ScreenManager()
 {
 	_sys_gameRunning = false;
-	_sys_screenWidth = _SCREEN_WIDTH;
-	_sys_screenHeight = _SCREEN_HEIGHT;
+	_sys_screenWidth = 0;
+	_sys_screenHeight = 0;
 	_sys_window = NULL;
 	_sys_deltaTime = 0.0f;
 	_sys_lastFrameTime = 0;
@@ -21,11 +21,12 @@ ScreenManager::~ScreenManager()
 }
 
 
-SDL_Window* ScreenManager::Initialize(String _SCREEN_TITLE)
+SDL_Window* ScreenManager::Initialize(String _SCREEN_TITLE, int _SCREEN_WIDTH, int _SCREEN_HEIGHT)
 {
 	if (_sys_gameRunning) // Prevent re-initializing
 		return NULL;
 
+	// Initialize SDL
 	printf("SDL INIT: Initializing\n");
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
@@ -33,11 +34,15 @@ SDL_Window* ScreenManager::Initialize(String _SCREEN_TITLE)
 	}
 	else
 	{
+		// SDL Init is OK, create window
 		printf("SDL INIT: Creating Window\n");
+		_sys_screenWidth = _SCREEN_WIDTH;
+		_sys_screenHeight = _SCREEN_HEIGHT;
 		_sys_window = SDL_CreateWindow(_SCREEN_TITLE.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, _sys_screenWidth, _sys_screenHeight, SDL_WINDOW_SHOWN);
 		if (_sys_window == NULL)
 		{
 			printf("SDL ERR: Window could not be created! SDL_Error: %s\n", SDL_GetError());
+			return NULL;
 		}
 
 		printf("SDL INIT: Creating Renderer\n");

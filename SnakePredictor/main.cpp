@@ -8,8 +8,8 @@ int main(int argc, char* args[])
 	const int SCREEN_FPS = 60;
 
 	ScreenManager* _sys_screenManager = NULL;
-	_sys_screenManager = new ScreenManager(SCREEN_WIDTH, SCREEN_HEIGHT);
-	SDL_Window* _sys_window = _sys_screenManager->Initialize(SCREEN_TITLE);
+	_sys_screenManager = new ScreenManager();
+	SDL_Window* _sys_window = _sys_screenManager->Initialize(SCREEN_TITLE, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	printf("SDL START: Running Main Loop\n");
 	while (_sys_screenManager->Loop()) // Update game and check its still running

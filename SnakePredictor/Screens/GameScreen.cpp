@@ -112,6 +112,10 @@ void GameScreen::Render(SDL_Renderer* _Renderer)
 				SDL_SetRenderDrawColor(_Renderer, 255, 255, 255, 255);
 				SDL_RenderFillRect(_Renderer, &levelSegment);
 				break;
+			case LEVEL_SEGMENT_PLAYER_SNAKE_HEAD:
+				SDL_SetRenderDrawColor(_Renderer, 237, 32, 36, 255);
+				SDL_RenderFillRect(_Renderer, &levelSegment);
+				break;
 			default: // Equal to LEVEL_SEGMENT_BLANK
 				// Draw nothing
 				break;
