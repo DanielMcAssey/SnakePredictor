@@ -119,6 +119,11 @@ bool ScreenManager::Loop()
 			_sys_fpsCounterUpdateTime = 0.0f;
 		}
 
+		while (SDL_PollEvent(&_sys_eventHandler)) {
+			if (_sys_eventHandler.type == SDL_QUIT)
+				_sys_gameRunning = false;
+		}
+
 		_sys_input->UpdateStates(); // Update input states
 
 		if (_sys_input->IsPressed("QUIT")) // Global quit input
