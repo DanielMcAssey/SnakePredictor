@@ -10,10 +10,11 @@ public:
 	virtual void Unload();
 	virtual void Update(float _DeltaTime);
 	virtual void Render(SDL_Renderer* _Renderer);
+	String GetScreenName();
 protected:
 	InputManager* gInput;
 	SDL_Window* gWindow;
-	std::string gScreenName;
+	String gScreenName;
 };
 
 #endif

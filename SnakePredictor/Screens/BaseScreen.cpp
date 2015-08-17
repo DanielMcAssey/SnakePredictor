@@ -16,6 +16,13 @@ BaseScreen::~BaseScreen()
 }
 
 
+String BaseScreen::GetScreenName()
+{
+	return gScreenName;
+}
+
+
+// Virtual Methods
 void BaseScreen::Load()
 {
 

@@ -33,6 +33,8 @@
 #include <vector>
 #include <memory>
 #include <sstream>
+#include <ctime>
+#include <stdlib.h>
 
 // Fix for TCHAR
 #ifndef UNICODE  
