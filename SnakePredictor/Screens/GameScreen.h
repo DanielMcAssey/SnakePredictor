@@ -1,14 +1,7 @@
 #ifndef __SCREEN_GAME
 #define __SCREEN_GAME
 
-enum LevelSegment
-{
-	LEVEL_SEGMENT_BLANK = 0,
-	LEVEL_SEGMENT_WALL,
-	LEVEL_SEGMENT_PLAYER_FOOD,
-	LEVEL_SEGMENT_PLAYER_SNAKE,
-	LEVEL_SEGMENT_PLAYER_SNAKE_HEAD
-};
+#include "../Entity/SnakeEntity.h"
 
 class GameScreen : public BaseScreen
 {
@@ -26,6 +19,7 @@ private:
 	std::map<std::pair<int, int>, LevelSegment> LevelGrid;
 
 	float SankeUpdateTimer;
+	SnakeEntity* EntSnake;
 
 	void PlaceFood();
 };

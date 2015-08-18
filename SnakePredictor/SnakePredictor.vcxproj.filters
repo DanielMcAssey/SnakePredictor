@@ -25,6 +25,12 @@
     <Filter Include="Source Files\Input">
       <UniqueIdentifier>{5b62b85b-dc57-4941-95f6-91358c2f12d7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Entity">
+      <UniqueIdentifier>{050a3397-2f41-4a6f-b715-dbc0f1f1ddf7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entity">
+      <UniqueIdentifier>{a08c600a-731b-4086-9a19-3e9f508f6221}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -48,6 +54,9 @@
     <ClCompile Include="Screens\GameScreen.cpp">
       <Filter>Source Files\Screens</Filter>
     </ClCompile>
+    <ClCompile Include="Entity\SnakeEntity.cpp">
+      <Filter>Source Files\Entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -70,6 +79,12 @@
     </ClInclude>
     <ClInclude Include="Screens\ScreenList.h">
       <Filter>Header Files\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\SnakeEntity.h">
+      <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Enums.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

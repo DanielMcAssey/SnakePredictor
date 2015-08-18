@@ -63,6 +63,9 @@ void GameScreen::Load()
 		}
 	}
 
+	SankeUpdateTimer = 0.0f;
+	EntSnake = new SnakeEntity(&LevelGrid, SNAKE_START_SIZE, LevelWidth, LevelHeight); // Create the snake
+
 	PlaceFood(); // Place initial food
 }
 
@@ -74,6 +77,10 @@ void GameScreen::Unload()
 	ScreenWidth, ScreenHeight = 0;
 	LevelWidth, LevelHeight = 0;
 	LevelGrid.clear();
+
+	SankeUpdateTimer = 0.0f;
+	delete EntSnake;
+	EntSnake = nullptr;
 }
 
 
@@ -86,6 +93,9 @@ void GameScreen::Update(float _DeltaTime)
 	{
 		SankeUpdateTimer = 0.0f;
 		// Update snake movement
+		if(EntSnake != nullptr)
+			EntSnake->Update(_DeltaTime);
+
 	}
 }
 

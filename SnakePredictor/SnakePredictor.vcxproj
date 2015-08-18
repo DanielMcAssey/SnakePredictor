@@ -153,6 +153,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Entity\SnakeEntity.cpp" />
     <ClCompile Include="Input\InputHelper.cpp" />
     <ClCompile Include="Input\InputManager.cpp" />
     <ClCompile Include="main.cpp" />
@@ -167,6 +168,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Entity\SnakeEntity.h" />
+    <ClInclude Include="Enums.h" />
     <ClInclude Include="Input\InputHelper.h" />
     <ClInclude Include="Input\InputManager.h" />
     <ClInclude Include="Screens\BaseScreen.h" />

@@ -43,5 +43,7 @@ typedef std::string String;
 typedef std::wstring String;
 #endif
 
+// Managers and other global classes
+#include "Enums.h"
 #include "Input\InputManager.h"
 #include "Screens\ScreenManager.h"
