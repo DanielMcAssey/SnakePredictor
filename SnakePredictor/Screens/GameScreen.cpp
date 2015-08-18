@@ -30,6 +30,7 @@ void GameScreen::PlaceFood()
 		if (LevelGrid[std::make_pair(randomX, randomY)] == LEVEL_SEGMENT_BLANK)
 		{
 			LevelGrid[std::make_pair(randomX, randomY)] = LEVEL_SEGMENT_PLAYER_FOOD;
+			LevelFoodLocation = std::make_pair(randomX, randomY);
 			isPlaced = true;
 		}
 	}
@@ -40,7 +41,7 @@ void GameScreen::CollectFood()
 {
 	// TODO: Add points
 	EntSnake->isFoodCollected = false;
-	PlaceFood();
+	//PlaceFood();
 }
 
 
@@ -101,7 +102,7 @@ void GameScreen::Update(float _DeltaTime)
 	{
 		SankeUpdateTimer = 0.0f;
 		// Update snake movement
-		if (EntSnake != nullptr)
+		if (EntSnake != nullptr && !EntSnake->isDead)
 		{
 			EntSnake->Update(_DeltaTime);
 			if (EntSnake->isFoodCollected)

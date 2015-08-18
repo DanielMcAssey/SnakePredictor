@@ -5,6 +5,7 @@ struct SnakePart
 {
 	std::pair<int, int> Location;
 	SnakeMovement LastMovement;
+	bool NewPart;
 };
 
 class SnakeEntity
@@ -16,14 +17,16 @@ public:
 	void Unload();
 	void Update(float _DeltaTime);
 
-	void Move(SnakeMovement _Direction);
-
 	bool isDead;
 	bool isFoodCollected;
 private:
+	void Move(SnakeMovement _Direction);
 	void ClearBody();
 	void UpdateBody();
-	bool CanMove(std::pair<int, int> _Location);
+	bool CanMove(LevelSegment _SegmentType);
+	bool Collision(std::pair<int, int> _Location);
+
+	SnakeMovement Path_CalculateNextDirection();
 
 	std::map<std::pair<int, int>, LevelSegment>* LevelGrid;
 	int LevelWidth, LevelHeight;
