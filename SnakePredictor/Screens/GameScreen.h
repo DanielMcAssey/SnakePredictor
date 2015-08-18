@@ -14,14 +14,16 @@ public:
 	void Update(float _DeltaTime);
 	void Render(SDL_Renderer* _Renderer);
 private:
+	void PlaceFood();
+	void CollectFood();
+
 	int ScreenWidth, ScreenHeight;
 	int LevelWidth, LevelHeight;
 	std::map<std::pair<int, int>, LevelSegment> LevelGrid;
+	std::pair<int, int> LevelFoodLocation;
 
 	float SankeUpdateTimer;
 	SnakeEntity* EntSnake;
-
-	void PlaceFood();
 };
 
 #endif

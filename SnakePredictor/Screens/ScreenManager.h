@@ -18,6 +18,7 @@ private:
 	int _sys_screenWidth;
 	int _sys_screenHeight;
 	bool _sys_gameRunning;
+	bool _sys_gamePaused;
 
 	SDL_Window* _sys_window;
 	SDL_Event _sys_eventHandler;

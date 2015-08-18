@@ -36,6 +36,14 @@ void GameScreen::PlaceFood()
 }
 
 
+void GameScreen::CollectFood()
+{
+	// TODO: Add points
+	EntSnake->isFoodCollected = false;
+	PlaceFood();
+}
+
+
 void GameScreen::Load()
 {
 	BaseScreen::Load();
@@ -93,9 +101,14 @@ void GameScreen::Update(float _DeltaTime)
 	{
 		SankeUpdateTimer = 0.0f;
 		// Update snake movement
-		if(EntSnake != nullptr)
+		if (EntSnake != nullptr)
+		{
 			EntSnake->Update(_DeltaTime);
-
+			if (EntSnake->isFoodCollected)
+			{
+				CollectFood();
+			}
+		}
 	}
 }
 

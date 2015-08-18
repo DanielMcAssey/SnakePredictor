@@ -6,6 +6,7 @@
 ScreenManager::ScreenManager()
 {
 	_sys_gameRunning = false;
+	_sys_gamePaused = false;
 	_sys_screenWidth = 0;
 	_sys_screenHeight = 0;
 	_sys_window = NULL;
@@ -57,6 +58,7 @@ SDL_Window* ScreenManager::Initialize(String _SCREEN_TITLE, int _SCREEN_WIDTH, i
 		_sys_input->AddKeyboardInput("QUIT", SDL_SCANCODE_ESCAPE, true);
 		_sys_input->AddKeyboardInput("ENTER", SDL_SCANCODE_RETURN, true);
 		_sys_input->AddKeyboardInput("ENTER", SDL_SCANCODE_RETURN2, true);
+		_sys_input->AddKeyboardInput("PAUSE", SDL_SCANCODE_SPACE, true);
 
 		printf("SDL INIT: Registering Default Screens\n");
 		// Add initial screens
@@ -94,6 +96,7 @@ void ScreenManager::UnloadAll()
 	printf("SDL EXIT: Misc. Tasks\n");
 	delete _sys_input;
 	_sys_input = nullptr;
+	_sys_gamePaused = false;
 }
 
 // Update the screens
@@ -129,8 +132,14 @@ bool ScreenManager::Loop()
 		if (_sys_input->IsPressed("QUIT")) // Global quit input
 			_sys_gameRunning = false;
 
-		for (_sys_screenList_itr = _sys_screenList.begin(); _sys_screenList_itr != _sys_screenList.end(); ++_sys_screenList_itr) {
-			(*_sys_screenList_itr)->Update(_sys_deltaTime);
+		if (_sys_input->IsPressed("PAUSE")) // Global pause input
+			_sys_gamePaused = !_sys_gamePaused;
+
+		if (!_sys_gamePaused)
+		{
+			for (_sys_screenList_itr = _sys_screenList.begin(); _sys_screenList_itr != _sys_screenList.end(); ++_sys_screenList_itr) {
+				(*_sys_screenList_itr)->Update(_sys_deltaTime);
+			}
 		}
 	}
 

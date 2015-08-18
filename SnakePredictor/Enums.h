@@ -10,4 +10,12 @@ enum LevelSegment
 	LEVEL_SEGMENT_PLAYER_SNAKE_HEAD
 };
 
+enum SnakeMovement
+{
+	SNAKE_MOVE_UP = 0,
+	SNAKE_MOVE_DOWN,
+	SNAKE_MOVE_LEFT,
+	SNAKE_MOVE_RIGHT
+};
+
 #endif
