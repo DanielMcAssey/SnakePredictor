@@ -240,6 +240,7 @@ bool SnakeEntity::CalculatePath(std::pair<int, int> _ToGridReference)
 			int yDirection = gridY + SnakeDirections[(SnakeMovement)i].second;
 			std::pair<int, int> gridDirection = std::make_pair(xDirection, yDirection);
 
+			// Check to see if snake can move there
 			if (CanMove((*LevelGrid)[gridDirection]) || PathClosedNodes[gridDirection] != 1)
 			{
 				gridChildNode = new PathNode(gridDirection, gridNode->Depth, gridNode->Priority);

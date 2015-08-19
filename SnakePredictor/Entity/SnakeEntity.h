@@ -35,9 +35,9 @@ public:
 		yDistance = (double)(_Destination.second - Position.second);
 		// Euclidian Distance
 		totalDistance = (int)sqrt(xDistance * xDistance + yDistance * yDistance);
-		// Manhattan distance
+		// Manhattan Distance
 		//totalDistance = (int)(abs(xDistance) + abs(yDistance));
-		// Chebyshev distance
+		// Chebyshev Distance
 		//totalDistance = (int)(max(abs(xDistance), abs(yDistance)));
 		return totalDistance;
 	}
