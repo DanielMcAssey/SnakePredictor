@@ -51,15 +51,18 @@ SnakeEntity::~SnakeEntity()
 
 void SnakeEntity::ClearBody()
 {
-	for (std::vector<SnakePart*>::iterator itr = SnakeParts.begin(); itr != SnakeParts.end(); ++itr)
+	for (std::vector<std::pair<int, int>>::iterator itr = SnakePartsOld.begin(); itr != SnakePartsOld.end(); ++itr)
 	{
-		(*LevelGrid)[(*itr)->Location] = LEVEL_SEGMENT_BLANK;
+		(*LevelGrid)[(*itr)] = LEVEL_SEGMENT_BLANK;
 	}
+	SnakePartsOld.clear();
 }
 
 
 void SnakeEntity::UpdateBody()
 {
+	ClearBody(); // Clear the old body and add the new one
+
 	for (std::vector<SnakePart*>::iterator itr = SnakeParts.begin(); itr != SnakeParts.end(); ++itr)
 	{
 		if (itr == SnakeParts.begin()) // First element should always be a head
@@ -76,6 +79,11 @@ void SnakeEntity::UpdateBody()
 
 void SnakeEntity::Move(SnakeMovement _Direction)
 {
+	for (std::vector<SnakePart*>::iterator itr = SnakeParts.begin(); itr != SnakeParts.end(); ++itr)
+	{
+		SnakePartsOld.push_back((*itr)->Location);
+	}
+
 	SnakePart* snakeHead = SnakeParts.front();
 	std::pair<int, int> newPosition = std::make_pair(SnakeDirections[_Direction].first + snakeHead->Location.first, SnakeDirections[_Direction].second + snakeHead->Location.second);
 
@@ -110,6 +118,11 @@ void SnakeEntity::Move(SnakeMovement _Direction)
 		}
 
 		SnakeParts.front()->LastMovement = _Direction;
+	}
+
+	if (isDead)
+	{
+		printf("SNAKE: Dead!\n");
 	}
 }
 
@@ -205,7 +218,6 @@ bool SnakeEntity::CalculatePath(std::pair<int, int> _ToGridReference)
 
 		if (gridLocation == _ToGridReference)
 		{
-			printf("SNAKE (FOOD FOUND): X: %i Y: %i\n", gridX, gridY);
 			while (gridLocation != startPosition)
 			{
 				// Fill Snake path
@@ -215,7 +227,7 @@ bool SnakeEntity::CalculatePath(std::pair<int, int> _ToGridReference)
 				gridY += SnakeDirections[tmpMovement].second;
 				gridLocation = std::make_pair(gridX, gridY);
 			}
-
+			printf("SNAKE (FOOD FOUND): X: %i Y: %i\n", gridX, gridY);
 			delete gridNode;
 			// Empty unused nodes
 			while (!possibleOpenNodesQueue[queueIndex].empty()) possibleOpenNodesQueue[queueIndex].pop();
@@ -305,9 +317,6 @@ void SnakeEntity::Update(float _DeltaTime)
 {
 	if (!isDead) // Dont update if dead
 	{
-		// Clear body from level to update the movement
-		ClearBody();
-
 		// Move the snake on the calculated path, or if no path exists calculate one.
 		MoveOnPath();
 

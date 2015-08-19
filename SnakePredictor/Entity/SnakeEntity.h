@@ -68,6 +68,7 @@ private:
 	std::map<std::pair<int, int>, LevelSegment>* LevelGrid;
 	int LevelWidth, LevelHeight;
 	std::vector<SnakePart*> SnakeParts;
+	std::vector<std::pair<int, int>> SnakePartsOld;
 	std::vector<SnakeMovement> SnakePath;
 	std::map<SnakeMovement, std::pair<int, int>> SnakeDirections;
 	std::pair<int, int>* SnakeFoodLocation;
