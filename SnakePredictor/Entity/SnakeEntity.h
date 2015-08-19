@@ -61,9 +61,10 @@ private:
 	bool CanMove(LevelSegment _SegmentType);
 	bool Collision(std::pair<int, int> _Location);
 	SnakeMovement GetOppositeMovement(SnakeMovement _Movement);
-
-	bool CalculatePath(std::pair<int, int> _ToGridReference);
 	void MoveOnPath();
+
+	bool CalculatePath_Try1(std::pair<int, int> _ToGridReference);
+	bool CalculatePath_Try2(std::pair<int, int> _ToGridReference);
 
 	std::map<std::pair<int, int>, LevelSegment>* LevelGrid;
 	int LevelWidth, LevelHeight;

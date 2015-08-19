@@ -179,13 +179,14 @@ SnakeMovement SnakeEntity::GetOppositeMovement(SnakeMovement _Movement)
 		return SNAKE_MOVE_UP;
 	case SNAKE_MOVE_LEFT:
 		return SNAKE_MOVE_RIGHT;
+	default:
 	case SNAKE_MOVE_RIGHT:
 		return SNAKE_MOVE_LEFT;
 	}
 }
 
 // Path finding
-bool SnakeEntity::CalculatePath(std::pair<int, int> _ToGridReference)
+bool SnakeEntity::CalculatePath_Try1(std::pair<int, int> _ToGridReference)
 {
 	std::priority_queue<PathNode> possibleOpenNodesQueue[2];
 	int queueIndex = 0;
@@ -287,6 +288,13 @@ bool SnakeEntity::CalculatePath(std::pair<int, int> _ToGridReference)
 }
 
 
+bool CalculatePath_Try2(std::pair<int, int> _ToGridReference)
+{
+	// Different algorithm for path finding. BFS?
+	return false;
+}
+
+
 void SnakeEntity::MoveOnPath()
 {
 	if (!SnakePath.empty()) // Move only if there is a next path
@@ -296,7 +304,7 @@ void SnakeEntity::MoveOnPath()
 	}
 	else
 	{
-		if (!CalculatePath(std::make_pair(SnakeFoodLocation->first, SnakeFoodLocation->second))) // Calculate route to food
+		if (!CalculatePath_Try1(std::make_pair(SnakeFoodLocation->first, SnakeFoodLocation->second))) // Calculate route to food
 		{
 			Move(SNAKE_MOVE_LEFT); // TODO: More intelligent way of movement if no path is currently available
 		}
