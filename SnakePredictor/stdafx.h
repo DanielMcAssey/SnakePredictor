@@ -28,6 +28,7 @@
 
 #include <SDL.h>
 #include <map>
+#include <unordered_map>
 #include <utility>
 #include <string>
 #include <vector>
@@ -35,6 +36,9 @@
 #include <sstream>
 #include <ctime>
 #include <stdlib.h>
+#include <queue>
+#include <math.h>
+#include <iomanip>
 
 // Fix for TCHAR
 #ifndef UNICODE  

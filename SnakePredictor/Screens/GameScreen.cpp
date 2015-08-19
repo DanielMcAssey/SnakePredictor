@@ -73,7 +73,7 @@ void GameScreen::Load()
 	}
 
 	SankeUpdateTimer = 0.0f;
-	EntSnake = new SnakeEntity(&LevelGrid, SNAKE_START_SIZE, LevelWidth, LevelHeight); // Create the snake
+	EntSnake = new SnakeEntity(&LevelGrid, SNAKE_START_SIZE, LevelWidth, LevelHeight, &LevelFoodLocation); // Create the snake
 
 	PlaceFood(); // Place initial food
 }
