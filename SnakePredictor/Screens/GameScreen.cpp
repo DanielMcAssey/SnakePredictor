@@ -2,10 +2,10 @@
 #include "../stdafx.h"
 #include "GameScreen.h"
 
-const int POINT_SIZE = 10; // 10 Pixels high and wide for every segment
-const int BORDER_WIDTH = 3; // 2 Points of border
-const int SNAKE_START_SIZE = 3;  // 3 Points start size
-const float SNAKE_UPDATE_FREQUENCY = 0.0f; // x every second
+const int POINT_SIZE = 10; // (x) pixels high and wide for every level segment (Point Size)
+const int BORDER_WIDTH = 3; // (x) number of points for border
+const int SNAKE_START_SIZE = 3;  // (x) points start snake size
+const float SNAKE_UPDATE_FREQUENCY = 0.0f; // Wait (x) before next snake update
 
 GameScreen::GameScreen(String _name, InputManager* _input, SDL_Window* _window) : BaseScreen(_name, _input, _window)
 {
