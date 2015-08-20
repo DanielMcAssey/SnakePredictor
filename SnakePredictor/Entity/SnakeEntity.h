@@ -72,6 +72,7 @@ private:
 	SnakeMovement GetOppositeMovement(SnakeMovement _Movement);
 	void MoveOnPath();
 	bool MoveToFreeSpace();
+	void Kill();
 
 	bool CalculatePath(std::pair<int, int> _ToGridReference);
 

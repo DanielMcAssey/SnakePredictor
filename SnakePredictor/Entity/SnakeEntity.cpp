@@ -126,11 +126,13 @@ void SnakeEntity::Move(SnakeMovement _Direction)
 
 		SnakeParts.front()->LastMovement = _Direction;
 	}
+}
 
-	if (isDead)
-	{
-		printf("SNAKE: Snake Died!\n");
-	}
+// Kill the snake
+void SnakeEntity::Kill()
+{
+	isDead = true;
+	printf("SNAKE: Snake Died!\n");
 }
 
 
@@ -161,7 +163,7 @@ bool SnakeEntity::Collision(std::pair<int, int> _Location)
 	case LEVEL_SEGMENT_WALL:
 	case LEVEL_SEGMENT_PLAYER_SNAKE:
 	case LEVEL_SEGMENT_PLAYER_SNAKE_HEAD: // Odd case check would never happen, never hurts to add it though
-		isDead = true;
+		Kill();
 		break;
 	}
 
@@ -204,6 +206,9 @@ bool SnakeEntity::CalculatePath(std::pair<int, int> _ToGridReference)
 	int gridX, gridY, xDirection, yDirection;
 	std::pair<int, int> gridLocation, gridDirection, startPosition;
 	startPosition = SnakeParts.front()->Location;
+
+	// Clear any remaining paths from old calculations
+	SnakePath.clear();
 
 	// Clear nodes
 	PathClosedNodes.clear();
@@ -313,11 +318,14 @@ void SnakeEntity::MoveOnPath()
 	}
 	else
 	{
-		// Clear any remaining paths
-		SnakePath.clear();
 		if (!CalculatePath(std::make_pair(SnakeFoodLocation->first, SnakeFoodLocation->second))) // Calculate route to food
 		{
-			MoveToFreeSpace();
+			// Cant calculate path, so move to any free space, to see if we can create a path.
+			if (!MoveToFreeSpace())
+			{
+				// Cant move to free space, so set to dead
+				Kill();
+			}
 		}
 	}
 }
@@ -325,20 +333,23 @@ void SnakeEntity::MoveOnPath()
 // Move to any possible free space, this could be improved on.
 bool SnakeEntity::MoveToFreeSpace()
 {
-	bool isMoved = false;
-	int totalMoves = SnakeDirections.size();
-	while (!isMoved && totalMoves > 0)
+	std::vector<int> movesAvailable;
+	for (std::map<SnakeMovement, std::pair<int, int>>::iterator itr = SnakeDirections.begin(); itr != SnakeDirections.end(); ++itr)
+		movesAvailable.push_back((int)itr->first);
+
+	while (movesAvailable.size() > 0)
 	{
-		SnakeMovement moveDirection = (SnakeMovement)(rand() % (SnakeDirections.size() - 1));
+		int randomIndex = (rand() % (movesAvailable.size()));
+		SnakeMovement moveDirection = (SnakeMovement)movesAvailable[randomIndex];
+		movesAvailable.erase(movesAvailable.begin() + randomIndex);
 		std::pair<int, int> newPosition = std::make_pair(SnakeDirections[moveDirection].first + SnakeParts.front()->Location.first, SnakeDirections[moveDirection].second + SnakeParts.front()->Location.second);
 		if (CanMove((*LevelGrid)[newPosition]))
 		{
-			isMoved = true;
 			Move((SnakeMovement)moveDirection);
+			return true;
 		}
-		totalMoves -= 1;
 	}
-	return isMoved;
+	return false;
 }
 
 
