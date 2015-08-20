@@ -295,7 +295,7 @@ bool SnakeEntity::CalculatePath_Try1(std::pair<int, int> _ToGridReference)
 }
 
 
-bool CalculatePath_Try2(std::pair<int, int> _ToGridReference)
+bool SnakeEntity::CalculatePath_Try2(std::pair<int, int> _ToGridReference)
 {
 	// Different algorithm for path finding. BFS?
 	return false;
