@@ -84,8 +84,7 @@ void SnakeEntity::Move(SnakeMovement _Direction)
 		SnakePartsOld.push_back((*itr)->Location);
 	}
 
-	SnakePart* snakeHead = SnakeParts.front();
-	std::pair<int, int> newPosition = std::make_pair(SnakeDirections[_Direction].first + snakeHead->Location.first, SnakeDirections[_Direction].second + snakeHead->Location.second);
+	std::pair<int, int> newPosition = std::make_pair(SnakeDirections[_Direction].first + SnakeParts.front()->Location.first, SnakeDirections[_Direction].second + SnakeParts.front()->Location.second);
 
 	if (!Collision(newPosition)) // Make sure we dont collide with anything
 	{
@@ -186,6 +185,7 @@ SnakeMovement SnakeEntity::GetOppositeMovement(SnakeMovement _Movement)
 }
 
 // Path finding
+// TODO: Fix this method, it attempts to collide with it self causing it to die.
 bool SnakeEntity::CalculatePath_Try1(std::pair<int, int> _ToGridReference)
 {
 	std::priority_queue<PathNode> possibleOpenNodesQueue[2];
@@ -215,7 +215,7 @@ bool SnakeEntity::CalculatePath_Try1(std::pair<int, int> _ToGridReference)
 
 		possibleOpenNodesQueue[queueIndex].pop();
 		PathOpenNodes[gridLocation] = 0;
-		PathClosedNodes[gridLocation] = 1;
+		PathClosedNodes[gridLocation] = true;
 
 		if (gridLocation == _ToGridReference)
 		{
@@ -245,7 +245,7 @@ bool SnakeEntity::CalculatePath_Try1(std::pair<int, int> _ToGridReference)
 			gridDirection = std::make_pair(xDirection, yDirection);
 
 			// Check to see if snake can move there
-			if (CanMove((*LevelGrid)[gridDirection]) || PathClosedNodes[gridDirection] != 1)
+			if (CanMove((*LevelGrid)[gridDirection]) || !PathClosedNodes[gridDirection])
 			{
 				gridChildNode = new PathNode(gridDirection, gridNode->Depth, gridNode->Priority);
 				gridChildNode->NextDepth((SnakeMovement)i);

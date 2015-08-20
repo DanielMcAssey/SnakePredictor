@@ -75,7 +75,7 @@ private:
 	std::pair<int, int>* SnakeFoodLocation;
 
 	std::map<std::pair<int, int>, int> PathOpenNodes;
-	std::map<std::pair<int, int>, int> PathClosedNodes;
+	std::map<std::pair<int, int>, bool> PathClosedNodes;
 	std::map<std::pair<int, int>, SnakeMovement> PathDirections;
 };
 
