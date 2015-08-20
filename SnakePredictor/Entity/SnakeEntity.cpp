@@ -1,3 +1,11 @@
+/*
+// This file is part of SnakePredictor
+//
+//  (c) Daniel McAssey <hello@glokon.me>
+//
+// For the full copyright and license information, please view the LICENSE
+// file that was distributed with this source code.
+*/
 #include "stdafx.h"
 #include "../stdafx.h"
 #include "SnakeEntity.h"
@@ -121,7 +129,7 @@ void SnakeEntity::Move(SnakeMovement _Direction)
 
 	if (isDead)
 	{
-		printf("SNAKE: Dead!\n");
+		printf("SNAKE: Snake Died!\n");
 	}
 }
 
@@ -184,9 +192,10 @@ SnakeMovement SnakeEntity::GetOppositeMovement(SnakeMovement _Movement)
 	}
 }
 
-// Path finding
+// Path Finding Algorithm
+// A* Path finding algorithm originally from: http://code.activestate.com/recipes/577457-a-star-shortest-path-algorithm/
 // TODO: Fix this method, it attempts to collide with it self causing it to die.
-bool SnakeEntity::CalculatePath_Try1(std::pair<int, int> _ToGridReference)
+bool SnakeEntity::CalculatePath(std::pair<int, int> _ToGridReference)
 {
 	std::priority_queue<PathNode> possibleOpenNodesQueue[2];
 	int queueIndex = 0;
@@ -244,7 +253,7 @@ bool SnakeEntity::CalculatePath_Try1(std::pair<int, int> _ToGridReference)
 			yDirection = gridY + SnakeDirections[(SnakeMovement)i].second;
 			gridDirection = std::make_pair(xDirection, yDirection);
 
-			// Check to see if snake can move there
+			// Check to see if snake can move there or that the node isnt closed
 			if (CanMove((*LevelGrid)[gridDirection]) || !PathClosedNodes[gridDirection])
 			{
 				gridChildNode = new PathNode(gridDirection, gridNode->Depth, gridNode->Priority);
@@ -295,13 +304,6 @@ bool SnakeEntity::CalculatePath_Try1(std::pair<int, int> _ToGridReference)
 }
 
 
-bool SnakeEntity::CalculatePath_Try2(std::pair<int, int> _ToGridReference)
-{
-	// Different algorithm for path finding. BFS?
-	return false;
-}
-
-
 void SnakeEntity::MoveOnPath()
 {
 	if (!SnakePath.empty() && !isFoodCollected) // Move only if there is a next path
@@ -313,11 +315,30 @@ void SnakeEntity::MoveOnPath()
 	{
 		// Clear any remaining paths
 		SnakePath.clear();
-		if (!CalculatePath_Try1(std::make_pair(SnakeFoodLocation->first, SnakeFoodLocation->second))) // Calculate route to food
+		if (!CalculatePath(std::make_pair(SnakeFoodLocation->first, SnakeFoodLocation->second))) // Calculate route to food
 		{
-			//Move(SNAKE_MOVE_LEFT); // TODO: More intelligent way of movement if no path is currently available
+			MoveToFreeSpace();
 		}
 	}
+}
+
+// Move to any possible free space, this could be improved on.
+bool SnakeEntity::MoveToFreeSpace()
+{
+	bool isMoved = false;
+	int totalMoves = SnakeDirections.size();
+	while (!isMoved && totalMoves > 0)
+	{
+		SnakeMovement moveDirection = (SnakeMovement)(rand() % (SnakeDirections.size() - 1));
+		std::pair<int, int> newPosition = std::make_pair(SnakeDirections[moveDirection].first + SnakeParts.front()->Location.first, SnakeDirections[moveDirection].second + SnakeParts.front()->Location.second);
+		if (CanMove((*LevelGrid)[newPosition]))
+		{
+			isMoved = true;
+			Move((SnakeMovement)moveDirection);
+		}
+		totalMoves -= 1;
+	}
+	return isMoved;
 }
 
 

@@ -1,3 +1,11 @@
+/*
+// This file is part of SnakePredictor
+//
+//  (c) Daniel McAssey <hello@glokon.me>
+//
+// For the full copyright and license information, please view the LICENSE
+// file that was distributed with this source code.
+*/
 #ifndef __ENTITY_SNAKE
 #define __ENTITY_SNAKE
 
@@ -8,11 +16,11 @@ struct SnakePart
 	bool NewPart;
 };
 
-// A* Path finding algorithm originally from: http://code.activestate.com/recipes/577457-a-star-shortest-path-algorithm/
 class PathNode
 {
 public:
 	PathNode(std::pair<int, int> _Position, int _Depth, int _Priority) { Position = _Position; Depth = _Depth; Priority = _Priority; }
+
 	std::pair<int, int> Position;
 	int Depth;
 	int Priority;
@@ -43,6 +51,7 @@ public:
 	}
 };
 
+
 class SnakeEntity
 {
 public:
@@ -62,9 +71,9 @@ private:
 	bool Collision(std::pair<int, int> _Location);
 	SnakeMovement GetOppositeMovement(SnakeMovement _Movement);
 	void MoveOnPath();
+	bool MoveToFreeSpace();
 
-	bool CalculatePath_Try1(std::pair<int, int> _ToGridReference);
-	bool CalculatePath_Try2(std::pair<int, int> _ToGridReference);
+	bool CalculatePath(std::pair<int, int> _ToGridReference);
 
 	std::map<std::pair<int, int>, LevelSegment>* LevelGrid;
 	int LevelWidth, LevelHeight;
