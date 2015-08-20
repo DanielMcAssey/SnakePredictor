@@ -192,8 +192,8 @@ bool SnakeEntity::CalculatePath_Try1(std::pair<int, int> _ToGridReference)
 	int queueIndex = 0;
 	PathNode* gridNode;
 	PathNode* gridChildNode;
-	int gridX, gridY;
-	std::pair<int, int> gridLocation, startPosition;
+	int gridX, gridY, xDirection, yDirection;
+	std::pair<int, int> gridLocation, gridDirection, startPosition;
 	startPosition = SnakeParts.front()->Location;
 
 	// Clear nodes
@@ -204,7 +204,7 @@ bool SnakeEntity::CalculatePath_Try1(std::pair<int, int> _ToGridReference)
 	gridNode->UpdatePriority(_ToGridReference);
 
 	possibleOpenNodesQueue[queueIndex].push(*gridNode);
-	PathOpenNodes[gridNode->Position] = gridNode->Priority; // Mark first point
+	PathOpenNodes[startPosition] = gridNode->Priority; // Mark first point
 
 	while (!possibleOpenNodesQueue[queueIndex].empty())
 	{
@@ -223,23 +223,26 @@ bool SnakeEntity::CalculatePath_Try1(std::pair<int, int> _ToGridReference)
 			{
 				// Fill Snake path
 				SnakeMovement tmpMovement = PathDirections[gridLocation];
-				SnakePath.push_back(GetOppositeMovement(tmpMovement));
 				gridX += SnakeDirections[tmpMovement].first;
 				gridY += SnakeDirections[tmpMovement].second;
 				gridLocation = std::make_pair(gridX, gridY);
+				SnakePath.push_back(GetOppositeMovement(tmpMovement));
 			}
-			printf("SNAKE (FOOD FOUND): X: %i Y: %i\n", gridX, gridY);
 			delete gridNode;
 			// Empty unused nodes
-			while (!possibleOpenNodesQueue[queueIndex].empty()) possibleOpenNodesQueue[queueIndex].pop();
+			while (!possibleOpenNodesQueue[queueIndex].empty())
+			{
+				possibleOpenNodesQueue[queueIndex].pop();
+			}
+			printf("SNAKE (FOOD FOUND): X: %i Y: %i\n", gridX, gridY);
 			return true;
 		}
 
 		for (int i = 0; i < SnakeDirections.size(); i++)
 		{
-			int xDirection = gridX + SnakeDirections[(SnakeMovement)i].first;
-			int yDirection = gridY + SnakeDirections[(SnakeMovement)i].second;
-			std::pair<int, int> gridDirection = std::make_pair(xDirection, yDirection);
+			xDirection = gridX + SnakeDirections[(SnakeMovement)i].first;
+			yDirection = gridY + SnakeDirections[(SnakeMovement)i].second;
+			gridDirection = std::make_pair(xDirection, yDirection);
 
 			// Check to see if snake can move there
 			if (CanMove((*LevelGrid)[gridDirection]) || PathClosedNodes[gridDirection] != 1)
@@ -259,14 +262,18 @@ bool SnakeEntity::CalculatePath_Try1(std::pair<int, int> _ToGridReference)
 					PathOpenNodes[gridDirection] = gridChildNode->Priority;
 					PathDirections[gridDirection] = GetOppositeMovement((SnakeMovement)i);
 
-					while (!(possibleOpenNodesQueue[queueIndex].top().Position == gridDirection))
+					while (possibleOpenNodesQueue[queueIndex].top().Position != gridDirection)
 					{
 						possibleOpenNodesQueue[1 - queueIndex].push(possibleOpenNodesQueue[queueIndex].top());
 						possibleOpenNodesQueue[queueIndex].pop();
 					}
 					possibleOpenNodesQueue[queueIndex].pop();
 
-					if (possibleOpenNodesQueue[queueIndex].size() > possibleOpenNodesQueue[1 - queueIndex].size()) queueIndex = 1 - queueIndex;
+					if (possibleOpenNodesQueue[queueIndex].size() > possibleOpenNodesQueue[1 - queueIndex].size())
+					{
+						queueIndex = 1 - queueIndex;
+					}
+
 					while (!possibleOpenNodesQueue[queueIndex].empty())
 					{
 						possibleOpenNodesQueue[1 - queueIndex].push(possibleOpenNodesQueue[queueIndex].top());
@@ -297,16 +304,18 @@ bool CalculatePath_Try2(std::pair<int, int> _ToGridReference)
 
 void SnakeEntity::MoveOnPath()
 {
-	if (!SnakePath.empty()) // Move only if there is a next path
+	if (!SnakePath.empty() && !isFoodCollected) // Move only if there is a next path
 	{
 		Move(SnakePath.front());
 		SnakePath.erase(SnakePath.begin());
 	}
 	else
 	{
+		// Clear any remaining paths
+		SnakePath.clear();
 		if (!CalculatePath_Try1(std::make_pair(SnakeFoodLocation->first, SnakeFoodLocation->second))) // Calculate route to food
 		{
-			Move(SNAKE_MOVE_LEFT); // TODO: More intelligent way of movement if no path is currently available
+			//Move(SNAKE_MOVE_LEFT); // TODO: More intelligent way of movement if no path is currently available
 		}
 	}
 }
