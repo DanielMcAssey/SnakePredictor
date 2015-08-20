@@ -61,6 +61,7 @@ public:
 	void Unload();
 	void Update(float _DeltaTime);
 
+	int numFoodPoints;
 	bool isDead;
 	bool isFoodCollected;
 private:

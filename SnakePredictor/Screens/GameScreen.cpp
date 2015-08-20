@@ -47,7 +47,7 @@ void GameScreen::PlaceFood()
 
 void GameScreen::CollectFood()
 {
-	// TODO: Add points
+	EntSnake->numFoodPoints += 10;
 	EntSnake->isFoodCollected = false;
 	PlaceFood();
 }

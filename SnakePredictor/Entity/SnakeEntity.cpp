@@ -24,6 +24,7 @@ SnakeEntity::SnakeEntity(std::map<std::pair<int, int>, LevelSegment>* _level, in
 	SnakeFoodLocation = _level_food_location;
 	isDead = false;
 	isFoodCollected = false;
+	numFoodPoints = 0;
 
 	// Create starting snake
 	int startPosX = LevelWidth / 2;
