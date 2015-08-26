@@ -74,7 +74,8 @@ SDL_Window* ScreenManager::Initialize(String _SCREEN_TITLE, int _SCREEN_WIDTH, i
 
 		printf("SDL INIT: Loading Default Screens Content\n");
 		// Load the screen content
-		for (_sys_screenList_itr = _sys_screenList.begin(); _sys_screenList_itr != _sys_screenList.end(); ++_sys_screenList_itr) {
+		for (_sys_screenList_itr = _sys_screenList.begin(); _sys_screenList_itr != _sys_screenList.end(); ++_sys_screenList_itr)
+		{
 			printf("SDL INIT->SCREEN: Loading '%s' Screen, please wait...\n", (*_sys_screenList_itr)->GetScreenName().c_str());
 			(*_sys_screenList_itr)->Load();
 		}
@@ -95,7 +96,8 @@ void ScreenManager::UnloadAll()
 	printf("SDL EXIT: Preparing for Exit\n");
 	printf("SDL EXIT: Unloading Screens\n");
 	// Unload all screens
-	for (_sys_screenList_itr = _sys_screenList.begin(); _sys_screenList_itr != _sys_screenList.end(); ++_sys_screenList_itr) {
+	for (_sys_screenList_itr = _sys_screenList.begin(); _sys_screenList_itr != _sys_screenList.end(); ++_sys_screenList_itr)
+	{
 		printf("SDL EXIT->SCREEN: Unloading '%s' Screen, please wait...\n", (*_sys_screenList_itr)->GetScreenName().c_str());
 		(*_sys_screenList_itr)->Unload();
 	}
@@ -145,7 +147,8 @@ bool ScreenManager::Loop()
 
 		if (!_sys_gamePaused)
 		{
-			for (_sys_screenList_itr = _sys_screenList.begin(); _sys_screenList_itr != _sys_screenList.end(); ++_sys_screenList_itr) {
+			for (_sys_screenList_itr = _sys_screenList.begin(); _sys_screenList_itr != _sys_screenList.end(); ++_sys_screenList_itr)
+			{
 				(*_sys_screenList_itr)->Update(_sys_deltaTime);
 			}
 		}
@@ -168,7 +171,8 @@ void ScreenManager::Render()
 		SDL_SetRenderDrawColor(_sys_renderer, 101, 156, 239, 255); // Screen clear
 		SDL_RenderClear(_sys_renderer);
 
-		for (_sys_screenList_itr = _sys_screenList.begin(); _sys_screenList_itr != _sys_screenList.end(); ++_sys_screenList_itr) {
+		for (_sys_screenList_itr = _sys_screenList.begin(); _sys_screenList_itr != _sys_screenList.end(); ++_sys_screenList_itr)
+		{
 			(*_sys_screenList_itr)->Render(_sys_renderer);
 		}
 
